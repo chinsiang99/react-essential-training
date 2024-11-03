@@ -53,7 +53,7 @@ function App() {
 
   useEffect(()=>{
     console.log(`The restaurant is ${status? "open": "close"}`)
-  }, []) // note here if we put empty array as second argument, it will only run on first render....
+  }, [status]) // note here if we put empty array as second argument, it will only run on first render....; other way, if we pass in status, it will check whenever status changed, then fire...
   return (
     <div>
         <h1>The restaurant is currently {status ? "open": "closed"}</h1>
