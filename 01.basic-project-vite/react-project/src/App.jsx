@@ -1,6 +1,6 @@
 import './App.css'
 import chef from './images/chef.jpg'
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 
 function Header(props){
   const { name, year } = props
@@ -45,15 +45,20 @@ function Main({dishes, status, onStatus}){
 let language = "Javascript"
 let moon = "🌙"
 function App() {
-  const [status, setStatus] = useState(true)
-  console.log(status)
+  // const [status, setStatus] = useState(true)
+  // console.log(status)
+  // we had another method to managing state, which is useReducer
+  // the first argument in useReducer, is actually the toggle, the second one is initial value...
+  const [status, toggle] = useReducer((status)=>!status, true)
   return (
     <div>
         <h1>The restaurant is currently {status ? "open": "closed"}</h1>
-        <button onClick={() => setStatus(!status)}>{status ? "Close": "Open"} restaurant</button>
+        {/* <button onClick={() => setStatus(!status)}>{status ? "Close": "Open"} restaurant</button> */}
+        <button onClick={() => toggle()}>{status ? "Close": "Open"} restaurant</button>
         <Header name="Alex" year={new Date().getFullYear()}/>
         <h1>Hello {language.toUpperCase()} {moon}!</h1>
-        <Main dishes = {dishObjects} status={status} onStatus={setStatus}/>
+        {/* <Main dishes = {dishObjects} status={status} onStatus={setStatus}/> */}
+        <Main dishes = {dishObjects} status={status} onStatus={toggle}/>
     </div>
   )
 }
