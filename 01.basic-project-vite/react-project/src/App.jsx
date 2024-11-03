@@ -44,12 +44,13 @@ function Main({dishes}){
 let language = "Javascript"
 let moon = "🌙"
 function App() {
-  const [status, setStatus] = useState("open")
+  const [status, setStatus] = useState(true)
   console.log(status)
   return (
     <div>
-        <h1>The restaurant is currently {status}</h1>
-        <button onClick={() => setStatus(status === "open" ? "close": "open")}>Close/Open restaurant</button>
+        <h1>The restaurant is currently {status ? "open": "closed"}</h1>
+
+        <button onClick={() => setStatus(!status)}>{status ? "Close": "Open"} restaurant</button>
         <Header name="Alex" year={new Date().getFullYear()}/>
         <h1>Hello {language.toUpperCase()} {moon}!</h1>
         <Main dishes = {dishObjects}/>
