@@ -10,6 +10,11 @@ after creating a project, go to package.json to delete react and react dom, then
 
 > npm install --save-exact react@rc react-dom@rc
 
+# create a next project
+```bash
+npx create-next-app@latest
+```
+
 # How useEffect Works
 The useEffect hook takes two arguments:
 
