@@ -15,12 +15,17 @@ const items = [
   "Tofu with Vegetables"
 ]
 
+const dishObjects = items.map(dish=>({
+  id: i,
+  title: dish
+}))
+
 function Main({dishes}){
   return (
     <ul>
       {dishes.map(dish => (
         // we use two curly braces if we want to have css styles
-        <li style={{ listStyleType: 'none' }}>{dish}</li>
+        <li key={dish.id} style={{ listStyleType: 'none' }}>{dish.title}</li>
       ))}
     </ul>
   )
@@ -33,7 +38,7 @@ function App() {
     <div>
         <Header name="Alex" year={new Date().getFullYear()}/>
         <h1>Hello {language.toUpperCase()} {moon}!</h1>
-        <Main dishes = {items}/>
+        <Main dishes = {dishObjects}/>
     </div>
   )
 }
