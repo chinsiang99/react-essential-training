@@ -1,6 +1,6 @@
 import './App.css'
 import chef from './images/chef.jpg'
-import { useReducer, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 
 function Header(props){
   const { name, year } = props
@@ -50,6 +50,10 @@ function App() {
   // we had another method to managing state, which is useReducer
   // the first argument in useReducer, is actually the toggle, the second one is initial value...
   const [status, toggle] = useReducer((status)=>!status, true)
+
+  useEffect(()=>{
+    console.log(`The restaurant is ${status? "open": "close"}`)
+  }, []) // note here if we put empty array as second argument, it will only run on first render....
   return (
     <div>
         <h1>The restaurant is currently {status ? "open": "closed"}</h1>
