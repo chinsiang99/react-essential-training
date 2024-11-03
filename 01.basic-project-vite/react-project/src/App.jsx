@@ -15,7 +15,7 @@ const items = [
   "Tofu with Vegetables"
 ]
 
-const dishObjects = items.map(dish=>({
+const dishObjects = items.map((dish, i)=>({
   id: i,
   title: dish
 }))
