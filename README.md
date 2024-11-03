@@ -176,3 +176,77 @@ function MyComponent() {
 
 export default MyComponent;
 ```
+
+# Difference between useEffect hook and useRef
+In React, useEffect and useRef serve distinct purposes and are typically used in different scenarios. Here’s an overview of when and why to use each:
+
+## When to Use useEffect
+useEffect is a hook for handling side effects in React components, such as:
+
+1. Fetching Data: When a component loads or updates, and you need to fetch data from an API, use useEffect to initiate the request.
+```javascript
+useEffect(() => {
+  fetchData();
+}, []);
+```
+2. Subscribing to or Unsubscribing from Services: Use useEffect to set up subscriptions (like WebSocket connections) when the component mounts and clean them up when it unmounts.
+```javascript
+useEffect(() => {
+  const socket = new WebSocket('ws://example.com');
+  return () => socket.close(); // Cleanup
+}, []);
+```
+3. Updating State Based on Props or Dependencies: If a component’s behavior depends on props or state values, use useEffect with a dependency array. This makes useEffect run only when those dependencies change.
+```javascript
+useEffect(() => {
+  // Code to handle prop change
+}, [someProp]);
+```
+4. Setting Up and Cleaning Up Timers: Use useEffect for timers or intervals, ensuring they are cleaned up when the component unmounts or dependencies change.
+```javascript
+useEffect(() => {
+  const timer = setInterval(() => doSomething(), 1000);
+  return () => clearInterval(timer); // Cleanup
+}, []);
+```
+5. Manipulating the DOM (Only If Necessary): For example, updating the document title based on a component’s state.
+```javascript
+useEffect(() => {
+  document.title = `New Title - ${stateValue}`;
+}, [stateValue]);
+```
+
+## When to Use useRef
+useRef is used to persist values across renders without triggering a re-render, as well as for direct DOM manipulation. Typical use cases include:
+1. Storing a Value Between Renders Without Re-Renders: For example, tracking the previous value of a prop or a state variable.
+
+```javascript
+const previousValue = useRef(someProp);
+useEffect(() => {
+  previousValue.current = someProp;
+}, [someProp]);
+```
+
+2. Accessing DOM Elements Directly: useRef can be used to directly interact with DOM elements (e.g., focusing an input field).
+```javascript
+const inputRef = useRef(null);
+const focusInput = () => inputRef.current.focus();
+```
+```html
+<input ref={inputRef} />
+```
+
+3. Maintaining Mutable Values That Don’t Cause Re-Renders: For example, storing an AbortController or a timer ID, which doesn’t need to cause re-renders if it changes.
+```javascript
+const controller = useRef(new AbortController());
+```
+
+4. Avoiding Re-Initialization of Non-Primitive Values: useRef helps avoid re-creating the same object or function on every render.
+```javascript
+const myFunction = useRef(() => { /* some function */ });
+```
+
+## Summary
+1. useEffect: Use when you need to handle side effects or react to changes in state or props. It’s typically used for anything that should happen as a result of a component render or update, like data fetching, subscriptions, and DOM updates.
+
+2. useRef: Use when you need a persistent, mutable value that doesn’t trigger re-renders or when you need direct DOM access. It’s best for cases where you need to “remember” something between renders but don’t want it to re-render your component.
